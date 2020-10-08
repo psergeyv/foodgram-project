@@ -1,0 +1,31 @@
+<div class="card" data-id="{{recipe.id}}">
+    {% load thumbnail %}
+    {% thumbnail recipe.image "364x240" crop="center" upscale=True as im %}
+    <a href="/recipes/{{recipe.author.id}}/{{recipe.id}}" class="link" target="_blank"><img src="{{ im.url }}" alt="{{recipe.title}}"
+        class="card__image"></a>
+    {% endthumbnail %}
+    
+    <div class="card__body">
+        <a class="card__title link" href="/recipes/{{recipe.author.id}}/{{recipe.id}}" target="_blank">{{recipe.title}}</a>
+        <ul class="card__items">
+            {% for tag in recipe.tags.all %}
+            <li class="card__item"><span class="badge {{tag.style}}">{{tag.title}}</span></li>
+            {% endfor %}
+        </ul>
+        <div class="card__items card__items_column">
+            <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
+            <p class="card__text"><span class="icon-user"></span> <a href="/recipes/{{recipe.author.id}}" 
+                style="color: black">
+                {% if recipe.author.first_name != '' or recipe.author.last_name != '' %}
+                {{ recipe.author.first_name }} {{ recipe.author.last_name }}
+                {% else %}
+                {{ recipe.author }}
+                {% endif %}
+            </a></p>
+        </div>
+    </div>
+    <div class="card__footer">
+        <button class="button button_style_light-blue" name="purchases" data-out><span
+                class="icon-plus button__icon"></span>Добавить в покупки</button>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} Рецепты {% endblock %} | {{ setting_site.name }}</title>
+    {% block static %} 
+    
+    {% endblock %}
+</head>
+
+<body class="body">
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__container container">
+                {% if user.is_authenticated %}
+                <ul class="nav__items list">
+                    <li class="nav__item {% if index %} nav__item_active {% endif %}"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                    <li class="nav__item {% if follow %} nav__item_active {% endif %}"><a href="#" class="nav__link link">Мои подписки</a></li>
+                    <li class="nav__item {% if new %} nav__item_active {% endif %}"><a href="#" class="nav__link link">Создать рецепт</a></li>
+                    <li class="nav__item {% if favorites %} nav__item_active {% endif %}"><a href="#" class="nav__link link">Избранное</a></li>
+                    <li class="nav__item {% if shop_list %} nav__item_active {% endif %}"><a href="#" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter">{{ shop_list_count }}</span></li>
+                </ul>
+                <ul class="nav__items list">
+                    <li class="nav__item"><a href="{% url 'EditProfile' %}" class="nav__link link">Профиль</a></li>
+                    <li class="nav__item"><a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a></li>
+                    <li class="nav__item"><a href="{% url 'logout' %}" class="nav__link link">Выход</a></li>
+                </ul>
+                {% else %}
+                <ul class="nav__items list">
+                    <li class="nav__item {% if index %} nav__item_active {% endif %}"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                    <li class="nav__item nav__item_disabled"><a href="{% url 'login' %}" class="nav__link link">Список покупок</a></li>
+                </ul>
+                <ul class="nav__items list">
+                    <li class="nav__item"><a href="{% url 'login' %}" class="nav__link link">Войти</a></li>
+                    <li class="nav__item"><a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a></li>
+                </ul>
+                {% endif%}
+            </div>
+        </nav>
+    </header>
+    <main class="main container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="footer__container container">
+            <a href="#" class="footer__brand link">{{ setting_site.name }}</a>
+            <ul class="footer__items">
+                <li class="footer__item"><a href="#" class="footer__link link">Об авторе </a></li>
+                <li class="footer__item"><a href="#" class="footer__link link">Технологии</a></li>
+            </ul>
+        </div>
+    </footer>
+    {% block script %}
+    
+    {% endblock %}    
+    
+</body>
+
+</html>
