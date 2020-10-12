@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %} Ошибка 404 {% endblock %}
+{% block keywords %} {% endblock %}
+{% block description %} {% endblock %}
+
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" href="{% static 'pages/index.css' %}">
+
+
+{% endblock %}
+
+{% block content %}
+{% include 'nav/nav.html' with home=True %}
+<main class="main container">
+        <div class="main__header">
+                <h1 class="main__title">Ой, страница кажется потеряна!</h1>
+        </div>
+
+        <div class="card__items card__items_column">
+                <p class="card__text">
+                Страница <code>{{ path }}</code> не найдена</p>
+                <p class="card__text"><a href="/">Вернуться на главную</a></p>
+        </div>
+
+</main>
+
+{% endblock %}
+
+{% block java-script %}
+<script src="{% static 'js/components/MainCards.js' %}"></script>
+
+<script src="{% static 'js/components/Purchases.js' %}"></script>
+
+<script src="{% static 'js/config/config.js' %}"></script>
+<script src="{% static 'js/components/CardList.js' %}"></script>
+<script src="{% static 'js/components/Header.js' %}"></script>
+
+<script src="{% static 'js/api/Api.js' %}"></script>
+<script src="{% static 'js/pages/indexNotAuth.js' %}"></script>
+{% endblock %}

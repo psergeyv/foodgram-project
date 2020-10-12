@@ -8,8 +8,10 @@
 <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock %}
 {% block content %}
+{% include 'nav/nav.html' with unew=True %}
+{% csrf_token %}
 <main class="main container">
-    <div class="single-card" data-id="{{recipe.id}}" data-author="{{author.id}}">
+    <div class="single-card" data-id="{{recipe.id}}" data-author="{{recipe.author.id}}">
         {% load thumbnail %}
         {% thumbnail recipe.image "480x480" crop="center" as im %}
         <img src="{{ im.url }}" alt="{{ recipe.title }}" class="single-card__image">
@@ -17,59 +19,89 @@
 
         <div class="single-card__info">
             <div class="single-card__header-info">
-                <h1 class="single-card__title">{{ recipe.title }}</h1>
+                <h1 class="single-card__title">{{ recipe.title }} </h1>
+                {% if request.user.is_authenticated %}
                 <div class="single-card__favorite">
+                    {% if is_favorite == 0 %}
                     <button class="button button_style_none" name="favorites" data-out><span
                             class="icon-favorite icon-favorite_big"></span></button>
                     <div class="single-card__favorite-tooltip tooltip">Добавить в избранное</div>
+                    {% else %}
+                    <button class="button button_style_none" name="favorites"><span
+                            class="icon-favorite icon-favorite_big icon-favorite_active"></span></button>
+                    <div class="single-card__favorite-tooltip tooltip">Удалить из избранного</div>
+                    {% endif %}
                 </div>
+
+                {% endif %}
             </div>
             <ul class="single-card__items">
                 {% for tag in recipe.tags.all %}
-                <li class="single-card__item"><span class="badge {{tag.style}}">{{tag.title}}</span></li>
+                <li class="single-card__item"><span class="badge badge_style_{{tag.style}}">{{tag.title}}</span></li>
                 {% endfor %}
             </ul>
             <div class="single-card__items single-card__items_column">
-                <p class="single-card__text"><span class="icon-time"></span> 20 мин.</p>
+                <p class="single-card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                 <ul class="single-card__items">
                     <li class="single-card__item">
-                        <p class="single-card__text"><span class="icon-user"></span> {{ recipe.author.first_name }} {{ recipe.author.last_name }}</p>
+                        <p class="single-card__text"><span class="icon-user"></span> {{ recipe.author.first_name }}
+                            {{ recipe.author.last_name }}</p>
                     </li>
                     {% if user == recipe.author %}
-                    <li class="single-card__item"> <a style="margin-left: 2.5em" href="#"
+                    <li class="single-card__item"> <a style="margin-left: 2.5em" href="{% url 'uedit' recipe.id%}"
                             class="single-card__text">Редактировать рецепт</a></li>
                     {% endif %}
                 </ul>
             </div>
+            {% if user == recipe.author %}
+            <div class="single-card__items single-card__items_column">
+                <p class="single-card__text">
+                    <a href="{% url 'udelete' id=recipe.id %}" style="color:red">Удалить рецепт</a>
+                </p>
+            </div>
+            {% endif %}
+            
             <ul class="single-card__items">
-                <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span
-                            class="icon-plus"></span> Добавить в покупки</button></li>
+
+                <li class="single-card__item">
+                    {% if is_purchases == 0 %}
+                    <button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span>
+                        Добавить в покупки</button>
+                    {% else %}
+                    <button class="button button_style_light-blue-outline" name="purchases"><span
+                            class="icon-check button__icon"></span> Рецепт добавлен</button>
+                    {% endif %}
+                </li>
+
+                {% if user != recipe.author %}
+                {% if is_following == 0 %}
                 <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe"
                         name="subscribe" data-out>Подписаться на автора</button></li>
+                {% else %}
+                <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe"
+                        name="subscribe">Отписаться от автора</button></li>
+                {% endif %}
+                {% endif %}
             </ul>
             <div class="single-card__section">
                 <h3 class="single-card__section-title">Ингридиенты:</h3>
                 <div class="single-card__items single-card__items_column">
-                    <p class=" single-card__section-item">Яйцо - 2 шт.</p>
-                    <p class=" single-card__section-item">Молоко - 200 мл.</p>
-                    <p class=" single-card__section-item">Тосты - 4 шт.</p>
-                    <p class=" single-card__section-item">Сахар 2 сл.л.</p>
-                    <p class=" single-card__section-item">Яйцо - 2 шт.</p>
-                    <p class=" single-card__section-item">Молоко - 200 мл.</p>
+                    {% for item in recipe.recipe_count.all %}
+                    <p class=" single-card__section-item">{{item.ingredient.title}} - {{ item.count }}
+                        {{ item.ingredient.dimension }}</p>
+                    {% endfor %}
                 </div>
             </div>
             <div class="single-card__section">
                 <h3 class="single-card__section-title">Описание:</h3>
-                <p class=" single-card__section-text">Смешать молоко с сахаром, добавить яйца, тщательно все взбить.
-                    Обмакнуть тосты в смесь и жарить на сливочном масле до золотистой корочки.</p>
-                <p class=" single-card__section-text">Полить сверху сиропом топинамбура и украсить ягодами.</p>
+                <p class=" single-card__section-text">{{ recipe.description|safe }}</p>
             </div>
         </div>
     </div>
 </main>
 {% endblock %}
 
-{% block script %}
+{% block java-script %}
 <script src="{% static 'js/components/Favorites.js' %}"></script>
 <script src="{% static 'js/components/Subscribe.js' %}"></script>
 <script src="{% static 'js/components/Purchases.js' %}"></script>
@@ -81,4 +113,4 @@
 
 <script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'js/pages/singlePage.js' %}"></script>
-{% endblock %}
+{% endblock %} 

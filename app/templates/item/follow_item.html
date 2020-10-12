@@ -1,0 +1,40 @@
+{% load filtr_recipes %}
+<div class="card-user" data-author={{ follow.author.id }}>
+
+    <div class="card-user__header">
+        <h2 class="card-user__title">{{ follow.author.first_name }} {{ follow.author.last_name }}</h2>
+    </div>
+ 
+    <div class="card-user__body">
+
+        <ul class="card-user__items">
+
+            {% for recipe in request|items_follow:follow.author.id %}
+            <li class="card-user__item">
+                <div class="recipe">
+                    {% load thumbnail %}
+                    {% thumbnail recipe.image "72x72" as im %}
+                    <img src="{{ im.url }}" class="recipe__image">
+                    {% endthumbnail %}
+                    <h3 class="recipe__title">{{ recipe.title }}</h3>
+                    <p class="recipe__text"><span
+                            class="icon-time"></span>&#160;&#160;{{ recipe.cooking_time }}&#160;мин</p>
+                </div>
+            </li>
+            {% endfor%}
+
+            {% if request|count_recipises:follow.author.id > 0 %}
+            <li class="card-user__item">
+                <a href="{% url 'urecipes' user_id=follow.author.id %}" class="card-user__link link">Еще рецептов:
+                    {{ request|count_recipises:follow.author.id }}</a>
+            </li>
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+    <div class="card-user__footer">
+        <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+    </div>
+</div>

@@ -12,39 +12,17 @@
 {% endblock %}
 
 {% block content %}
-{% csrf_token %}
 {% include 'nav/nav.html' with home=True %}
 <main class="main container">
-<div class="main__header"> 
-    <h1 class="main__title">Рецепты</h1>
- 
-    <ul class="tags">
-        {% for tag,val in tags.items %}
-        <li class="tags__item">
-            <a id="{{tag}}"
-                class="tags__checkbox tags__checkbox_style_{{val.style}} {% if val.view %}tags__checkbox_active {% endif %}"
-                href="{{val.url}}"></a>
-            <span class="tags__label">{{val.title}}</span>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-<div class="card-list">
-    {% for recipe in recipes %}
-    {% include "item/RecipesItem.html" with recipe=recipe %}
-    {% endfor %}
-</div>
+        <div class="main__header">
+                <h1 class="main__title">{{ flatpage.title }}</h1>
+        </div>
 
-
-{% if recipes.has_other_pages %}
-{% include "paginator.html" with items=recipes paginator=paginator%}
-{% endif %}
-
-{{request|html_block:'hometext'|safe}}
-
+        <div class="form-container">
+                {{ flatpage.content }}
+        </div>
 </main>
 {% endblock %}
-
 {% block java-script %}
 <script src="{% static 'js/components/MainCards.js' %}"></script>
 
@@ -56,5 +34,4 @@
 
 <script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'js/pages/indexNotAuth.js' %}"></script>
-
 {% endblock %}

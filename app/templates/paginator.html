@@ -1,0 +1,31 @@
+<nav class="pagination" aria-label="Search results pages">
+    <ul class="pagination__container">
+        {% if items.has_previous %}
+        <li class="pagination__item"><a class="pagination__link link"
+                href="?page={{ items.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                <span class="icon-left"></span></a>
+            </li>
+        {% else %}
+        <li class="pagination__item"><span class="pagination__link link" tabindex="-1" aria-disabled="true"><span
+                    class="icon-left"></span></span></li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+        <li class="pagination__item {% if items.number == i %} pagination__item_active {% endif %}">
+            <a class="pagination__link link" 
+            href="?page={{ i }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+            {{ i }}
+        </a>
+        </li>
+        {% endfor %}
+        {% if items.has_next %}
+        <li class="pagination__item"><a class="pagination__link link" 
+            href="?page={{ items.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+            <span class="icon-right"></span></a>
+        </li>
+        {% else %}
+        <li class="pagination__item"><span class="pagination__link link"><span class="icon-right"></span></span></li>
+        {% endif %}
+
+    </ul>
+</nav>

@@ -7,10 +7,13 @@
 {% endblock %}
 
 {% block content %}
+{% include 'nav/nav.html' with unew=True %}
+<main class="main container">
 <div class="custom-center-block">
     <p class="custom-text-block">Вы вышли из своей учётной записи. Ждём вас снова!</p>
     <div class="custom-button-block">
         <a href="/" class="button button_style_blue">Перейти на главную</a>
     </div>
 </div>
+</main>
 {% endblock %}

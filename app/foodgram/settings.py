@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '#*mr6&ar2%7o=##v=gimq@^f@hhi3ui=c645nu3-f^sbnq-bqp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 SITE_ID = 1
@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'home',
     'recipes',
     'users',
+    'actions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'sorl.thumbnail',
     'django.contrib.sites',
+    'django.contrib.flatpages',
 ]
 
 MIDDLEWARE = [

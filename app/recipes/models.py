@@ -69,7 +69,9 @@ class Recipes(models.Model):
     )
 
     tags = models.ManyToManyField(
-        Tags, related_name='recipes_tags', verbose_name='ТЭГ')
+        Tags, 
+        related_name='recipes_tags', 
+        verbose_name='ТЭГ')
     cooking_time = models.PositiveSmallIntegerField('Время приготовления')
 
     pub_date = models.DateTimeField(
@@ -95,7 +97,7 @@ class Recipes(models.Model):
         return self.title
 
     image_img.short_description = 'Картинка'
-
+    '''
     def save(self, *args, **kwargs):
         if self.image:
             img = Image.open(self.image)
@@ -116,7 +118,7 @@ class Recipes(models.Model):
             super().save(*args, **kwargs)
         else:
             super(Recipes, self).save(*args, **kwargs)
-
+    '''
     def delete(self, *args, **kwargs):
         storage, path = self.image.storage, self.image.path
         super(Recipes, self).delete(*args, **kwargs)
@@ -125,12 +127,12 @@ class Recipes(models.Model):
 
 class IngredientRecipes(models.Model):
     recipe = models.ForeignKey(
-        Recipes, on_delete=models.CASCADE, related_name='recipe_amount', verbose_name="Рецепт"
+        Recipes, on_delete=models.CASCADE, related_name='recipe_count', verbose_name="Рецепт"
     )
     ingredient = models.ForeignKey(
         Ingredient, on_delete=models.CASCADE, related_name='recipe_ingredients', verbose_name="Ингредиент"
     )
-    count = models.FloatField(verbose_name="Количество")
+    count = models.IntegerField(verbose_name="Количество")
 
     def __str__(self):
         return self.ingredient.title

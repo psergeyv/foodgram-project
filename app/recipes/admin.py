@@ -32,10 +32,10 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('^title', )
 
 
-#@admin.register(IngredientAmount)
-#class IngredientAmountAdmin(admin.ModelAdmin):
-#    list_display = ('id', 'ingredient', 'recipe', 'count', )
-#    list_display_links = ('ingredient',)
+@admin.register(IngredientRecipes)
+class IngredientRecipesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'ingredient', 'recipe', 'count', )
+    list_display_links = ('ingredient',)
 
 
 @admin.register(Tags)

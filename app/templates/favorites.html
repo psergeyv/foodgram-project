@@ -1,24 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Список покупок{% endblock %}
+{% block title %}Избранное{% endblock %}
 
 {% load static %}
-
 {% block static %}
 <link rel="stylesheet" href="{% static 'pages/index.css' %}">
-
 {% endblock %}
-{% block content %}
-{% include 'nav/nav.html' with index=True %}
 
+{% block content %}
+{% include 'nav/nav.html' with favorites=True %}
 <main class="main container">
+
 <div class="main__header">
-    <h1 class="main__title">
-        {% if author.first_name != '' or author.last_name != '' %}
-        {{ author.first_name }} {{ author.last_name }}
-        {% else %}
-        {{ author.username }}
-        {% endif %}
-    </h1>
+    <h1 class="main__title">Избранное</h1>
     <ul class="tags">
         {% for tag,val in tags.items %}
         <li class="tags__item">
@@ -29,24 +22,32 @@
         {% endfor %}        
     </ul>
 </div>
+
+
+{% csrf_token %}
 <div class="card-list">
-    {% for recipe in recipes %}
-    {% include "item/RecipesItem.html" with recipe=recipe %}
-    {% endfor %}
+    {% for recipe in page %}
+    {% include "item/favoripe_item.html" with recipe=recipe %}
+    {% endfor %} 
 </div>
+
 {% if page.has_other_pages %}
-{% include "paginator.html" with items=page paginator=paginator%}
+    {% include "components/paginator.html" with items=page paginator=paginator %}
 {% endif %}
 </main>
 {% endblock %}
 
 {% block java-script %}
 <script src="{% static 'js/components/MainCards.js' %}"></script>
+
 <script src="{% static 'js/components/Purchases.js' %}"></script>
+<script src="{% static 'js/components/Favorites.js' %}"></script>
+
 <script src="{% static 'js/config/config.js' %}"></script>
 <script src="{% static 'js/components/CardList.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>
-<script src="{% static 'js/api/Api.js' %}"></script>
-<script src="{% static 'js/pages/indexNotAuth.js' %}"></script>
 
+<script src="{% static 'js/api/Api.js' %}"></script>
+<script src="{% static 'js/pages/favorite.js' %}"></script>
+<script src="{% static 'js/pages/singlePage.js' %}"></script>
 {% endblock %}
