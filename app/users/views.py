@@ -13,18 +13,8 @@ class SignUp(CreateView):
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        #self.send_mail_ls(email)
         return super().form_valid(form)
-    '''
-    def send_mail_ls(self, email):
-        send_mail(
-            'Регистрация',
-            'Регистрация прошла успешно!',
-            'foodgram.ru <admin@foodgram.ru>',
-            [email],
-            fail_silently=False
-        )
-    '''
+    
 
 @login_required
 def EditProfile(request):

@@ -6,6 +6,16 @@ User = get_user_model()
 
 
 class CreationForm(UserCreationForm):
+    def clean_email(self):
+
+        cleaned_data = self.clean()
+        username = cleaned_data.get('email')
+        duplicate_username = User.objects.filter(username=username)
+        if duplicate_username.count() > 0:
+            self.add_error('email', f"Указанный вами e-mail уже зарегестрирован!")
+
+        return username
+        
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name',  'phone', 'vk')
@@ -18,13 +28,22 @@ class CreationForm(UserCreationForm):
         return user    
 
 
-class UpdateProfile(forms.ModelForm):
-    #username = forms.CharField(required=True,label="Логин")
+class UpdateProfile(forms.ModelForm):    
     email = forms.EmailField(required=True,label="E-mail")
     phone = forms.CharField(required=False,label="Номер телефона")
     vk = forms.URLField(required=False,label="Старничка вКонтакте")
     first_name = forms.CharField(required=False,label="Имя")
     last_name = forms.CharField(required=False,label="Фамилия")
+
+    def clean_email(self):
+
+        cleaned_data = self.clean()
+        username = cleaned_data.get('email')
+        duplicate_username = User.objects.filter(username=username)
+        if duplicate_username.count() > 0:
+            self.add_error('email', f"Указанный вами e-mail уже зарегестрирован!")
+
+        return username
 
     class Meta:
         model = User

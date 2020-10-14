@@ -18,7 +18,9 @@
 # Создание docker контейнера
  - запуск проекта выполняется командой <docker-compose up>
 # следующий шаги
- - открываем терминал <docker exec -it CONTAINER_ID bash>
+ - открываем терминал <docker-compose exec foodgram bash>
+ - миграция <python manage.py makemigrations users> (для расширения модели User)
+ - миграция <python manage.py migrate users> (для расширения модели User)
  - миграция <python manage.py migrate>
  - создание администратора <python manage.py createsuperuser>
  # настройка

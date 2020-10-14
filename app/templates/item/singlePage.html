@@ -60,7 +60,7 @@
                 </p>
             </div>
             {% endif %}
-            
+            {% if request.user.is_authenticated %}
             <ul class="single-card__items">
 
                 <li class="single-card__item">
@@ -72,7 +72,7 @@
                             class="icon-check button__icon"></span> Рецепт добавлен</button>
                     {% endif %}
                 </li>
-
+                
                 {% if user != recipe.author %}
                 {% if is_following == 0 %}
                 <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe"
@@ -82,7 +82,9 @@
                         name="subscribe">Отписаться от автора</button></li>
                 {% endif %}
                 {% endif %}
+                
             </ul>
+            {% endif %}
             <div class="single-card__section">
                 <h3 class="single-card__section-title">Ингридиенты:</h3>
                 <div class="single-card__items single-card__items_column">
@@ -113,4 +115,4 @@
 
 <script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'js/pages/singlePage.js' %}"></script>
-{% endblock %} 
+{% endblock %}
