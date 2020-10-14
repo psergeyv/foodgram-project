@@ -6,6 +6,7 @@ User = get_user_model()
 
 
 class CreationForm(UserCreationForm):
+    email = forms.EmailField(label="E-mail")
     def clean_email(self):
 
         cleaned_data = self.clean()
