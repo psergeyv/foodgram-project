@@ -16,13 +16,13 @@
 - DB_PORT=5432
 **Насатройки NGINX находятся в nginx/conf.d/local.conf**
 # Создание docker контейнера
- - запуск проекта выполняется командой <docker-compose up>
+ - запуск проекта выполняется командой **docker-compose up**
 # следующий шаги
- - открываем терминал <docker-compose exec foodgram bash>
- - миграция <python manage.py makemigrations users> (для расширения модели User)
- - миграция <python manage.py migrate users> (для расширения модели User)
- - миграция <python manage.py migrate>
- - создание администратора <python manage.py createsuperuser>
+ - открываем терминал **docker-compose exec foodgram bash**
+ - миграция **python manage.py makemigrations users** (для расширения модели User)
+ - миграция **python manage.py migrate users** (для расширения модели User)
+ - миграция **python manage.py migrate**
+ - создание администратора **python manage.py createsuperuser**
  # настройка
  - Войдите в админку сайта, Управление сайтом - Настройки сайта и добавьте настройки для текущего сайта.
  - Войдите в админку сайта, Простые страницы, добавте 2 страницы с адресами (/about/ и /technology/).
