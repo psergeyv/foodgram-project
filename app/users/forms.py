@@ -36,24 +36,13 @@ class UpdateProfile(forms.ModelForm):
     first_name = forms.CharField(required=False,label="Имя")
     last_name = forms.CharField(required=False,label="Фамилия")
 
-    def clean_email(self):
-
-        cleaned_data = self.clean()
-        username = cleaned_data.get('email')
-        duplicate_username = User.objects.filter(username=username)
-        if duplicate_username.count() > 0:
-            self.add_error('email', f"Указанный вами e-mail уже зарегестрирован!")
-
-        return username
-
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'phone', 'vk')
 
     def clean_email(self):
-        username = self.cleaned_data.get('email')
         email = self.cleaned_data.get('email')
 
-        if email and User.objects.filter(email=email).exclude(username=username).count():
-            raise forms.ValidationError('Ошибка, уже занято.')
+        if email and User.objects.filter(username=email).exclude(id=self.instance.id).count():
+            raise forms.ValidationError(f'Указанный вами e-mail уже зарегестрирован!')
         return email
