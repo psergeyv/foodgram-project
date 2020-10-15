@@ -9,4 +9,6 @@ COPY ./app /code
 
 EXPOSE 8010
 
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "nano"]
 CMD ["gunicorn", "--chdir", "foodgram", "--bind", ":8010", "foodgram.wsgi:application"]
