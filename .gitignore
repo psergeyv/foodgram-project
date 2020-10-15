@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 .vscode/
 /.vscode
-
+/app/static/
 /app/media/
