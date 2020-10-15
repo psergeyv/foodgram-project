@@ -20,9 +20,6 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements.in
 
-      - name: Lint with flake8
-        run: flake8 .
-
   push_to_docker_hub:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
