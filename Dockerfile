@@ -11,4 +11,4 @@ EXPOSE 8010
 
 RUN ["apt-get", "update"]
 RUN ["apt-get", "install", "-y", "nano"]
-CMD ["gunicorn", "--chdir", "foodgram2", "--bind", ":8010", "foodgram.wsgi:application"]
+CMD ["gunicorn", "--chdir", "foodgram", "--bind", ":8010", "foodgram.wsgi:application"]
