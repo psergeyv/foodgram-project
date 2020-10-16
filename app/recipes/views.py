@@ -129,7 +129,7 @@ def user_recipe_new(request):
                     ingredient = Ingredient.objects.get(
                         title=request.POST[f'nameIngredient_{t[1]}'])
                     IngredientsAdd = IngredientRecipes.objects.create(
-                        recipe=newRecipe,
+                        recipe_id=newRecipe.id,
                         ingredient=ingredient,
                         count=count
                     )
