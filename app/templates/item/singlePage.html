@@ -2,7 +2,7 @@
 {% block title %}{{recipe.title}}{% endblock %}
 {% block keywords %}рецепт,{{recipe.title}}{% endblock %}
 {% block description %}
-Кулинарный рецепт {{recipe.title}} от {{ recipe.author.first_name }} {{ recipe.author.last_name }}
+Кулинарный рецепт {{recipe.title}}, автор - {{ recipe.author.first_name }} {{ recipe.author.last_name }}
 {% endblock %}
 
 
