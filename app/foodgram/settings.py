@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {'DATABASE_URL'='psql://foodgram:foodgram@127.0.0.1:5432/foodgram'}
+    'default': {'DATABASE_URL':'psql://foodgram:foodgram@127.0.0.1:5432/foodgram'}
     #'default': {
     #    'ENGINE': 'django.db.backends.postgresql',
     #    'NAME': os.environ.get('DB_NAME'),
