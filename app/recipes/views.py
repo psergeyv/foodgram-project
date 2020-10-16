@@ -129,12 +129,12 @@ def user_recipe_new(request):
                     ingredient = Ingredient.objects.get(
                         title=request.POST[f'nameIngredient_{t[1]}'])
                     IngredientsAdd = IngredientRecipes.objects.create(
-                        recipe_id=newRecipe.id,
+                        recipe=newRecipe,
                         ingredient=ingredient,
                         count=count
                     )
                     IngredientsAdd.save()
-
+            form.save_m2m()
             return redirect(
                 'urecipe',
                 user_id=request.user.id,
