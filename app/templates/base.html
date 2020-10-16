@@ -21,7 +21,7 @@
     <footer class="footer">
         <div class="footer__container container">
             <a href="{% url 'index' %}" class="footer__brand link">{{ setting_site.name }}</a>
-            {% if setting_site.social_vk !='' %}
+            {% if setting_site.social_vk != '' %}
             <a href="{{ setting_site.social_vk }}" class="footer__brand link">Я вКонтакте</a>
             {% endif %}
             <ul class="footer__items">
