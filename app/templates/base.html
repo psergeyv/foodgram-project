@@ -20,7 +20,8 @@
     {% endblock %}
     <footer class="footer">
         <div class="footer__container container">
-            <a href="#" class="footer__brand link">{{ setting_site.name }}</a>
+            <a href="{% url 'index' %}" class="footer__brand link">{{ setting_site.name }}</a>
+            <a href="{{ setting_site.social_vk }}" class="footer__brand link">{{ setting_site.social_vk }}</a>
             <ul class="footer__items">
                 <li class="footer__item"><a href="{% url 'author' %}" class="footer__link link">Об авторе </a></li>
                 <li class="footer__item"><a href="{% url 'technology' %}" class="footer__link link">Технологии</a></li>
