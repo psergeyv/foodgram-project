@@ -61,7 +61,7 @@ def delete_subscription(request, following_id):
 
 
 def get_ingredients(request):
-    query = request.GET.get("query")
+    query = str(request.GET.get("query")).lower()
     ingredients = Ingredient.objects.filter(
         title__contains=query).values("title", "dimension")
     return JsonResponse(list(ingredients), safe=False)
