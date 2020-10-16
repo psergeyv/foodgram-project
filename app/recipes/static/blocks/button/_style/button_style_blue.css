@@ -1,4 +1,5 @@
 .button_style_blue {
+    line-height: 23px;
     background: #4A61DD;
     color: #FFFFFF;
     transition: background 0.2s;
