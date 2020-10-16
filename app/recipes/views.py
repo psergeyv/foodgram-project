@@ -66,13 +66,6 @@ def list_user_recipes(request, user_id):
 
 
 def view_user_recipes(request, user_id, id):
-    seo_list = {"title": "", "keywords": "", "description": ""}
-    seo = Seo.objects.filter(slug='index').first()
-    if seo:
-        seo_list = {"title": seo.title,
-                    "keywords": seo.keywords,
-                    "description": seo.description
-                    }
 
     recipe = get_object_or_404(Recipes, id=id)
     ingedients = IngredientRecipes.objects.filter(recipe=recipe).all()
@@ -90,7 +83,6 @@ def view_user_recipes(request, user_id, id):
             recipe=recipe).filter(user=request.user).count
 
     return render(request, "item/singlePage.html", {
-        "seo": seo_list,
         "recipe": recipe,
         "ingedients": ingedients,
         'is_favorite': is_favorite,
