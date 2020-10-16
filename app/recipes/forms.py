@@ -9,6 +9,9 @@ class RecipeCreateForm(ModelForm):
     class Meta:
         model = Recipes
         fields = ('title', 'tags', "cooking_time", "description", "image",)
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }
        
 
 
