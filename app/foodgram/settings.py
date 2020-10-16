@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '#*mr6&ar2%7o=##v=gimq@^f@hhi3ui=c645nu3-f^sbnq-bqp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*",'178.154.226.19','www.sl77.ru','sl77.ru']
 SITE_ID = 1
