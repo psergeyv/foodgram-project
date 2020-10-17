@@ -95,43 +95,40 @@ def view_user_recipes(request, user_id, id):
 def user_recipe_new(request):
     head_form = 'Создание рецепта'
     text_btn_form = 'Создать рецепт'
+    form = RecipeCreateForm(
+        request.POST or None,
+        files=request.FILES or None
+    )
 
-    if request.method == "POST":
-        form = RecipeCreateForm(
-            request.POST or None,
-            files=request.FILES or None
+    if request.method == "POST" and form.is_valid():
+        newRecipe = form.save(commit=False)
+        newRecipe.author = request.user
+        newRecipe.save()
+
+        ingTemp = []
+        for fing in request.POST:
+            t = fing.split('_')
+            if 'nameIngredient' == t[0]:
+                ingTemp.append(request.POST[f'nameIngredient_{t[1]}'])
+
+                if request.POST[f'valueIngredient_{t[1]}'] == '':
+                    count = 0
+                else:
+                    count = int(request.POST[f'valueIngredient_{t[1]}'])
+                ingredient = Ingredient.objects.get(
+                    title=request.POST[f'nameIngredient_{t[1]}'])
+                IngredientsAdd = IngredientRecipes.objects.create(
+                    recipe=newRecipe,
+                    ingredient=ingredient,
+                    count=count
+                )
+                IngredientsAdd.save()
+        form.save_m2m()
+        return redirect(
+            'urecipe',
+            user_id=request.user.id,
+            id=newRecipe.id
         )
-
-        if form.is_valid():
-
-            newRecipe = form.save(commit=False)
-            newRecipe.author = request.user
-            newRecipe.save()
-
-            ingTemp = []
-            for fing in request.POST:
-                t = fing.split('_')
-                if 'nameIngredient' == t[0]:
-                    ingTemp.append(request.POST[f'nameIngredient_{t[1]}'])
-
-                    if request.POST[f'valueIngredient_{t[1]}'] == '':
-                        count = 0
-                    else:
-                        count = int(request.POST[f'valueIngredient_{t[1]}'])
-                    ingredient = Ingredient.objects.get(
-                        title=request.POST[f'nameIngredient_{t[1]}'])
-                    IngredientsAdd = IngredientRecipes.objects.create(
-                        recipe=newRecipe,
-                        ingredient=ingredient,
-                        count=count
-                    )
-                    IngredientsAdd.save()
-            form.save_m2m()
-            return redirect(
-                'urecipe',
-                user_id=request.user.id,
-                id=newRecipe.id
-            )
 
     form = RecipeCreateForm()
     tags = Tags.objects.all()
