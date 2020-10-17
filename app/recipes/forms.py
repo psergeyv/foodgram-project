@@ -18,7 +18,7 @@ class RecipeCreateForm(ModelForm):
 
         if len(title) <=0:
             raise forms.ValidationError(f'Название не может быть пустым!')
-        return email   
+        return title  
 
 
 class RecipeForm(ModelForm):
