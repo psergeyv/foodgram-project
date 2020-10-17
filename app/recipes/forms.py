@@ -7,16 +7,21 @@ from .models import Recipes
 class RecipeCreateForm(ModelForm):
     class Meta:
         model = Recipes
-        fields = ('title', 'tags', "cooking_time", "description", "image",)
+        fields = ('name', 'tags', "cooking_time", "description", "image",)
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
         }
 
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+
+        if len(name) < 1:
+            raise forms.ValidationError(
+                f'Введите название!')
+        return name
 
 
 class RecipeForm(ModelForm):
     class Meta:
         model = Recipes
-        fields = ('title', "cooking_time", "description", "image",)
-
-    
+        fields = ('name', "cooking_time", "description", "image",)

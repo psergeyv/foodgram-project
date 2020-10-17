@@ -3,12 +3,12 @@
     {% load thumbnail %}
     {% thumbnail recipe.image "364x240" crop="center" upscale=True as im %}
     <a href="/recipes/{{recipe.author.id}}/{{recipe.id}}" class="link" target="_blank"><img src="{{ im.url }}"
-            alt="{{recipe.title}}" class="card__image"></a>
+            alt="{{recipe.name}}" class="card__image"></a>
     {% endthumbnail %}
 
     <div class="card__body">
         <a class="card__title link" href="/recipes/{{recipe.author.id}}/{{recipe.id}}"
-            target="_blank">{{recipe.title}}</a>
+            target="_blank">{{recipe.name}}</a>
         <ul class="card__items">
             {% for tag in recipe.tags.all %}
             <li class="card__item"><span class="badge badge_style_{{tag.style}}">{{tag.title}}</span></li>

@@ -10,15 +10,15 @@ class IngredientRecipesInline(admin.TabularInline):
 
 
 class RecipesAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"urlcode": ("title",)}
+    prepopulated_fields = {"urlcode": ("name",)}
     inlines = (IngredientRecipesInline,)
     list_display = (
-        'title', 'author', 
+        'name', 'author', 
         'cooking_time', 'id', 
     )
-    list_display_links = ('title',)
+    list_display_links = ('name',)
     list_filter = ('author', )
-    search_fields = ('title', 'author__username', )
+    search_fields = ('name', 'author__username', )
     autocomplete_fields = ('author', )
     ordering = ('-pub_date', )
    

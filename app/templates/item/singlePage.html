@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{{recipe.title}}{% endblock %}
-{% block keywords %}рецепт,{{recipe.title}}{% endblock %}
+{% block title %}{{recipe.name}}{% endblock %}
+{% block keywords %}рецепт,{{recipe.name}}{% endblock %}
 {% block description %}
-Кулинарный рецепт {{recipe.title}}, автор - {{ recipe.author.first_name }} {{ recipe.author.last_name }}
+Кулинарный рецепт {{recipe.name}}, автор - {{ recipe.author.first_name }} {{ recipe.author.last_name }}
 {% endblock %}
 
 
@@ -19,12 +19,12 @@
     <div class="single-card" data-id="{{recipe.id}}" data-author="{{recipe.author.id}}">
         {% load thumbnail %}
         {% thumbnail recipe.image "480x480" crop="center" as im %}
-        <img src="{{ im.url }}" alt="{{ recipe.title }}" class="single-card__image">
+        <img src="{{ im.url }}" alt="{{ recipe.name }}" class="single-card__image">
         {% endthumbnail %}
 
         <div class="single-card__info">
             <div class="single-card__header-info">
-                <h1 class="single-card__title">{{ recipe.title }} </h1>
+                <h1 class="single-card__title">{{ recipe.name }} </h1>
                 {% if request.user.is_authenticated %}
                 <div class="single-card__favorite">
                     {% if is_favorite == 0 %}

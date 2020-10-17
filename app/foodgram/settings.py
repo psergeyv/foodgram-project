@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#*mr6&ar2%7o=##v=gimq@^f@hhi3ui=c645nu3-f^sbnq-bqp'
+SECRET_KEY = 'asdsadas###dasdasdasd33323234' #os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -71,11 +71,8 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-import environ
-env = environ.Env()
-environ.Env.read_env()
+
 DATABASES = {
-    #'default': env.db(), # описываем, где искать настройки доступа к базе
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),

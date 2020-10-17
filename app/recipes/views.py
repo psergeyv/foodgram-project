@@ -130,7 +130,7 @@ def user_recipe_edit(request, id):
 
     if recipe.author != request.user:
         return redirect('view_recipe', recipe.author.id, id)
-    head_form = f'Редактирование рецепта ({recipe.title})'
+    head_form = f'Редактирование рецепта ({recipe.name})'
     text_btn_form = 'Сохранить изменения'
     form = RecipeCreateForm(request.POST or None,
                             files=request.FILES or None, instance=recipe)

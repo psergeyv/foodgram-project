@@ -54,7 +54,7 @@ class Recipes(models.Model):
         related_name='recipe_author',
         verbose_name='Автор',
     )
-    title = models.CharField('Название', max_length=200, blank=False)
+    name = models.CharField('Название', max_length=200, blank=False)
     image = models.ImageField(
         upload_to='irecipes/%d_%m_%Y/',
         verbose_name='Картинка',
@@ -81,12 +81,12 @@ class Recipes(models.Model):
                                null=True, verbose_name="Символьный код")
 
     class Meta:
-        ordering = ('-pub_date', 'title',)
+        ordering = ('-pub_date', 'name',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def delete(self, *args, **kwargs):
         storage, path = self.image.storage, self.image.path

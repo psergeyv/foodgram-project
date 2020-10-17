@@ -16,7 +16,7 @@
                     {% thumbnail recipe.image "72x72" as im %}
                     <img src="{{ im.url }}" class="recipe__image">
                     {% endthumbnail %}
-                    <h3 class="recipe__title">{{ recipe.title }}</h3>
+                    <h3 class="recipe__title">{{ recipe.name }}</h3>
                     <p class="recipe__text"><span
                             class="icon-time"></span>&#160;&#160;{{ recipe.cooking_time }}&#160;мин</p>
                 </div>
