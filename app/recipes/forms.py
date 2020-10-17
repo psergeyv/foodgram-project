@@ -5,7 +5,6 @@ from .models import Recipes
 
 
 class RecipeCreateForm(ModelForm):
-
     class Meta:
         model = Recipes
         fields = ('title', 'tags', "cooking_time", "description", "image",)
@@ -22,7 +21,6 @@ class RecipeCreateForm(ModelForm):
 
 
 class RecipeForm(ModelForm):
-
     class Meta:
         model = Recipes
         fields = ('title', "cooking_time", "description", "image",)
