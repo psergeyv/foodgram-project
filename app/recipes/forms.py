@@ -12,7 +12,13 @@ class RecipeCreateForm(ModelForm):
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
         }
-       
+
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+
+        if len(title) <=0:
+            raise forms.ValidationError(f'Название не может быть пустым!')
+        return email   
 
 
 class RecipeForm(ModelForm):
