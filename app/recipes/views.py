@@ -27,20 +27,13 @@ def list_user_recipes(request, user_id):
     list_tags = Tags.objects.order_by('title').all()
     tags = {}
 
-    list_tags = Tags.objects.order_by('title').all()
     tags_filters = []
-    for tag in list_tags:
-        temp_tags = []
-        if request.GET.get('f'):
-            temp_tags = request.GET.get('f').split(',')
-        if tag.slug in temp_tags:
-            temp_tags.remove(tag.slug)
-        else:
-            temp_tags.append(tag.slug)
+    if request.GET.get('f'):
+        tags_filters = request.GET.get('f').split(',')
 
     if len(tags_filters) > 0:
         recipes_list = Recipes.objects.filter(author=author.id).filter(
-            tags__id__in=tags_filters).order_by("pub_date").distinct()
+            tags__slug__in=tags_filters).order_by("pub_date").distinct()
     else:
         recipes_list = Recipes.objects.filter(
             author=author.id).order_by("pub_date").distinct()
@@ -200,21 +193,14 @@ def favorites(request):
     for tb in hrmlBlock:
         hrmlBl[tb.codeblock] = {'name': tb.name, 'description': tb.description}
 
-    list_tags = Tags.objects.order_by('title').all()
     tags_filters = []
-    for tag in list_tags:
-        temp_tags = []
-        if request.GET.get('f'):
-            temp_tags = request.GET.get('f').split(',')
-        if tag.slug in temp_tags:
-            temp_tags.remove(tag.slug)
-        else:
-            temp_tags.append(tag.slug)
+    if request.GET.get('f'):
+        tags_filters = request.GET.get('f').split(',')
 
     if len(tags_filters) > 0:
         recipes = Recipes.objects.filter(
             favorite_recipe__fuser=request.user).filter(
-            tags__id__in=tags_filters).order_by("pub_date").all()
+            tags__slug__in=tags_filters).order_by("pub_date").all()
     else:
         recipes = Recipes.objects.filter(
             favorite_recipe__fuser=request.user).order_by("pub_date").all()

@@ -31,6 +31,6 @@ def get_tags(request):
         if len(temp_tags) > 0:
             tags[tag.slug]['url'] = '?f='+','.join(temp_tags)
         else:
-            tags[tag.slug]['url'] = ''
+            tags[tag.slug]['url'] = request.path
 
     return {'tags': tags}
