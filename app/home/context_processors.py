@@ -2,6 +2,7 @@ from django.conf import settings
 import datetime as dt
 
 from home.models import Setting
+from recipes.models import Tags
 
 
 def setting_site(request):
