@@ -1,24 +1,23 @@
-from django.db import models
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
+import sys
+from io import BytesIO
 
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db import models
+from django.shortcuts import get_object_or_404
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-
-from sorl.thumbnail import ImageField, get_thumbnail
 from PIL import Image
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
-
+from sorl.thumbnail import ImageField, get_thumbnail
 
 User = get_user_model()
 
-def user_directory_path(instance, filename):    
+
+def user_directory_path(instance, filename):
     return '{0}/{1}'.format(instance.user.id, filename)
+
 
 class Tags(models.Model):
 
@@ -37,7 +36,7 @@ class Tags(models.Model):
 
 
 class Ingredient(models.Model):
-    title = models.CharField(max_length=200,db_index=True)
+    title = models.CharField(max_length=200, db_index=True)
     dimension = models.CharField(max_length=50)
 
     def __str__(self):
@@ -69,8 +68,8 @@ class Recipes(models.Model):
     )
 
     tags = models.ManyToManyField(
-        Tags, 
-        related_name='recipes_tags', 
+        Tags,
+        related_name='recipes_tags',
         verbose_name='ТЭГ')
     cooking_time = models.PositiveSmallIntegerField('Время приготовления')
 
@@ -85,12 +84,10 @@ class Recipes(models.Model):
         ordering = ('-pub_date', 'title',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
-    
 
     def __str__(self):
         return self.title
 
-    
     def delete(self, *args, **kwargs):
         storage, path = self.image.storage, self.image.path
         super(Recipes, self).delete(*args, **kwargs)

@@ -1,14 +1,13 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
-
-from django.contrib.auth.decorators import login_required
+from actions.models import Favorites, Follow, ShoppingList
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from home.models import Seo, Textblock
-from .models import Recipes, Ingredient, IngredientRecipes, Tags
-from actions.models import Follow, Favorites, ShoppingList
+
 from .forms import RecipeCreateForm, RecipeForm
+from .models import Ingredient, IngredientRecipes, Recipes, Tags
 from .utils import get_ingredients, get_tags_for_edit
 
 User = get_user_model()
