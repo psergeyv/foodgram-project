@@ -16,7 +16,7 @@ class RecipeCreateForm(ModelForm):
     def clean_title(self):
         title = self.cleaned_data.get('title')
 
-        if len(title) <=0:
+        if title == '':
             raise forms.ValidationError(f'Название не может быть пустым!')
         return title  
 
@@ -26,3 +26,10 @@ class RecipeForm(ModelForm):
     class Meta:
         model = Recipes
         fields = ('title', "cooking_time", "description", "image",)
+
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+
+        if title == '':
+            raise forms.ValidationError(f'Название не может быть пустым!')
+        return title    
