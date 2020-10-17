@@ -9,7 +9,7 @@
 {% include 'nav/nav.html' with new=True %}
 
 <main class="main container">
-    
+
     <div class="main__header">
         <h1 class="main__title">{{head_form}}</h1>
     </div>
@@ -23,7 +23,11 @@
 
                 <div class="form__field-group">
                     <input type="text" id="id_name" name="title" class="form__input" value="{{ recipe.title }}">
-                    <span class="form__error"></span>
+                    {% if form.errors %}
+                    {% for error in field.errors %}
+                    <span class="form__error">{{ error|escape }}</span>
+                    {% endfor %}
+                    {% endif %}
                 </div>
 
             </div>
@@ -72,10 +76,12 @@
                                 class="form__field-item-delete"></span>
                             <input id="nameIngredient_{{ forloop.counter }}" name="nameIngredient_{{ forloop.counter }}"
                                 type="hidden" value="{{ ingredient.ingredient.title }}">
-                            <input id="valueIngredient_{{ forloop.counter }}" name="valueIngredient_{{ forloop.counter }}"
-                                type="hidden" value="{{ ingredient.count }}">
-                            <input id="unitsIngredient_{{ forloop.counter }}" name="unitsIngredient_{{ forloop.counter }}"
-                                type="hidden" value="{{ ingredient.ingredient.dimension }}">
+                            <input id="valueIngredient_{{ forloop.counter }}"
+                                name="valueIngredient_{{ forloop.counter }}" type="hidden"
+                                value="{{ ingredient.count }}">
+                            <input id="unitsIngredient_{{ forloop.counter }}"
+                                name="unitsIngredient_{{ forloop.counter }}" type="hidden"
+                                value="{{ ingredient.ingredient.dimension }}">
                         </div>
                         {% endfor %}
                         {% endif %}
@@ -94,7 +100,12 @@
                     <input type="text" id="id_time" name="cooking_time" class="form__input"
                         value="{{recipe.cooking_time}}">
                     <label for="id_time" class="form__label">минут</label>
-                    <span class="form__error"></span>
+                    {% if form.errors %}
+                    {% for error in field.errors %}
+                    <span class="form__error">{{ error|escape }}</span>
+                    {% endfor %}
+                    {% endif %}
+
                 </div>
             </div>
 

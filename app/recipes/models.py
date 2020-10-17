@@ -97,28 +97,7 @@ class Recipes(models.Model):
         return self.title
 
     image_img.short_description = 'Картинка'
-    '''
-    def save(self, *args, **kwargs):
-        if self.image:
-            img = Image.open(self.image)
-            img_height = 991
-            img_width = 991
-            h, w = img.size
-            namet = img.seek(0)
-            scale = 991 / max(h, w)
-            if img.height > img_height or img.width > img_width:
-                img = img.resize((int(h * scale), int(w * scale)), Image.ANTIALIAS)
-                img.save(self.image.name)
-            try:
-                this = Recipes.objects.get(id=self.id)
-                if this.image != self.image:
-                    this.image.delete(save=False)
-            except:
-                pass
-            super().save(*args, **kwargs)
-        else:
-            super(Recipes, self).save(*args, **kwargs)
-    '''
+    
     def delete(self, *args, **kwargs):
         storage, path = self.image.storage, self.image.path
         super(Recipes, self).delete(*args, **kwargs)
