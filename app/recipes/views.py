@@ -14,26 +14,7 @@ from .utils import get_ingredients, get_tags_for_edit
 User = get_user_model()
 
 
-def list_user_recipes(request, user_id):
-    bdTags = Tags.objects.order_by("title").all()
-    tags = {}
-    tags_filters = []
-    for tag in bdTags:
-        tags[tag.slug] = {'title': tag.title, 'style': tag.style}
-        tempTags = []
-        if request.GET.get('f'):
-            tempTags = request.GET.get('f').split(',')
-        if tag.slug in tempTags:
-            tags_filters.append(tag.id)
-            tags[tag.slug]['view'] = True
-            tempTags.remove(tag.slug)
-        else:
-            tags[tag.slug]['view'] = False
-            tempTags.append(tag.slug)
-        if len(tempTags) > 0:
-            tags[tag.slug]['url'] = '?f='+','.join(tempTags)
-        else:
-            tags[tag.slug]['url'] = '/recipes/'+str(user_id)
+def list_user_recipes(request, user_id):    
 
     seo_list = {"title": "", "keywords": "", "description": ""}
     seo = Seo.objects.filter(slug='index').first()
