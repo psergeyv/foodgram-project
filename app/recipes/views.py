@@ -130,7 +130,6 @@ def user_recipe_new(request):
             id=newRecipe.id
         )
 
-    #form = RecipeCreateForm()
     tags = Tags.objects.all()
     return render(request, "formRecipe.html", {
         'form': form,

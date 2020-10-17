@@ -23,7 +23,7 @@
 
                 <div class="form__field-group">
                     <input type="text" id="id_name" name="title" class="form__input" value="{{ recipe.title }}">
-                    <span class="form__error">{{ form.title.error|escape }}</span>
+                    <span class="form__error">{{ form.title.error|striptags }}</span>
                 </div>
 
             </div>
@@ -42,7 +42,7 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <span class="form__error">{{ form.tags.errors }}</span>
+                    <span class="form__error">{{ form.tags.errors|striptags }}</span>
                 </div>
 
             </div>
@@ -96,7 +96,7 @@
                     <input type="text" id="id_time" name="cooking_time" class="form__input"
                         value="{{recipe.cooking_time}}">
                     <label for="id_time" class="form__label">минут</label>
-                    <span class="form__error"> {{ form.cooking_time.error|escape }}</span>
+                    <span class="form__error"> {{ form.cooking_time.error|striptags }}</span>
 
                 </div>
             </div>
@@ -114,7 +114,7 @@
                 <span class="form__label">Загрузить фото</span>
                 <div class="form__field-group">
                     <input type="file" name="image" id="id_file" value="">
-                    <span class="form__error">{{ form.image.error|escape }}</span>
+                    <span class="form__error">{{ form.image.error|striptags }}</span>
                 </div>
 
             </div>
