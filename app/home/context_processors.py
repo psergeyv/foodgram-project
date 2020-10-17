@@ -33,6 +33,6 @@ def get_tags(request):
         if len(tempTags) > 0:
             tags[tag.slug]['url'] = '?f='+','.join(tempTags)
         else:
-            tags[tag.slug]['url'] = '/recipes/'+str(user_id)
+            tags[tag.slug]['url'] = ''
 
     return tags
