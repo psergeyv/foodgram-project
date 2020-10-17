@@ -23,12 +23,12 @@
             <li class="shopping-list__item" data-id="{{val.recipe.id}}">
                 <div class="recipe recipe_reverse">
                     {% load thumbnail %}
-                    {% thumbnail val.recipe.image "90x90" as im %}
+                    {% thumbnail val.recipe.image "90x90" crop="center" as im %}
                     <img src="{{ im.url }}" alt="val.recipe.name" class="recipe__image recipe__image_big">
                     {% endthumbnail %}
                     
                     <h3 class="recipe__title">{{val.recipe.name}}</h3>
-                    <p class="recipe__text"><span class="icon-time"></span> {{val.recipe.cooking_time}}} мин.</p>
+                    <p class="recipe__text"><span class="icon-time"></span> {{val.recipe.cooking_time}} мин.</p>
                 </div>
                 <a href="" class="shopping-list__button link">Удалить</a>
             </li>
