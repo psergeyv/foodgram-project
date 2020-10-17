@@ -106,7 +106,7 @@
                 <div class="form__field-group">
                     <textarea name="description" id="id_description" rows="8"
                         class="form__textarea">{{recipe.description|striptags|safe}}</textarea>
-                    <span class="form__error">{{ form.description.errors }}</span>
+                    <span class="form__error">{{ form.description.errors|striptags }}</span>
                 </div>
             </div>
 
