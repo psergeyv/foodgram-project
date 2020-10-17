@@ -33,10 +33,10 @@ def list_user_recipes(request, user_id):
 
     if len(tags_filters) > 0:
         recipes_list = Recipes.objects.filter(author=author.id).filter(
-            tags__slug__in=tags_filters).order_by("pub_date").distinct()
+            tags__slug__in=tags_filters).order_by("-pub_date").distinct()
     else:
         recipes_list = Recipes.objects.filter(
-            author=author.id).order_by("pub_date").distinct()
+            author=author.id).order_by("-pub_date").distinct()
 
     paginator = Paginator(recipes_list, 6)
     page_number = request.GET.get('page')
@@ -200,10 +200,10 @@ def favorites(request):
     if len(tags_filters) > 0:
         recipes = Recipes.objects.filter(
             favorite_recipe__fuser=request.user).filter(
-            tags__slug__in=tags_filters).order_by("pub_date").all()
+            tags__slug__in=tags_filters).order_by("-pub_date").all()
     else:
         recipes = Recipes.objects.filter(
-            favorite_recipe__fuser=request.user).order_by("pub_date").all()
+            favorite_recipe__fuser=request.user).order_by("-pub_date").all()
 
     paginator = Paginator(recipes, 6)
     page_number = request.GET.get("page")
