@@ -71,16 +71,19 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),       
-    }
+import environ 
+env = environ.Env() 
+environ.Env.read_env() 
+DATABASES = { 
+    'default': env.db(), # описываем, где искать настройки доступа к базе 
+    #'default': {
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': os.environ.get('DB_NAME'),
+    #    'USER': os.environ.get('POSTGRES_USER'),
+    #    'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+    #    'HOST': os.environ.get('DB_HOST'),
+    #    'PORT': os.environ.get('DB_PORT'),       
+    #}
 }
 
 
