@@ -21,9 +21,9 @@ def index(request):
                    }
     
     if len(tags_filters) > 0:
-        recipes_list =  Recipes.objects.filter(tags__slug__in=tags_filters).order_by("pub_date").distinct()
+        recipes_list =  Recipes.objects.filter(tags__slug__in=tags_filters).order_by("-pub_date").distinct()
     else:
-        recipes_list =  Recipes.objects.order_by("pub_date").all() 
+        recipes_list =  Recipes.objects.order_by("-pub_date").all() 
 
     paginator = Paginator(recipes_list, 6)
     page_number = request.GET.get('page')
