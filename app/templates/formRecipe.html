@@ -23,11 +23,7 @@
 
                 <div class="form__field-group">
                     <input type="text" id="id_name" name="title" class="form__input" value="{{ recipe.title }}">
-                    {% if form.errors %}
-                    {% for error in field.errors %}
-                    <span class="form__error">{{ error|escape }}</span>
-                    {% endfor %}
-                    {% endif %}
+                    <span class="form__error">{{ form.title.error|escape }}</span>
                 </div>
 
             </div>
@@ -100,11 +96,7 @@
                     <input type="text" id="id_time" name="cooking_time" class="form__input"
                         value="{{recipe.cooking_time}}">
                     <label for="id_time" class="form__label">минут</label>
-                    {% if form.errors %}
-                    {% for error in field.errors %}
-                    <span class="form__error">{{ error|escape }}</span>
-                    {% endfor %}
-                    {% endif %}
+                    <span class="form__error"> {{ form.cooking_time.error|escape }}</span>
 
                 </div>
             </div>
@@ -122,7 +114,7 @@
                 <span class="form__label">Загрузить фото</span>
                 <div class="form__field-group">
                     <input type="file" name="image" id="id_file" value="">
-                    <span class="form__error"></span>
+                    <span class="form__error">{{ form.image.error|escape }}</span>
                 </div>
 
             </div>
