@@ -12,7 +12,7 @@
 
 <div class="main__header">
     <h1 class="main__title">Избранное</h1>
-    <ul class="tags">
+    <ul class="tags"> 
         {% for tag,val in tags.items %}
         <li class="tags__item">
             <a id="{{tag}}" class="tags__checkbox tags__checkbox_style_{{val.style}} {% if val.view %}tags__checkbox_active {% endif %}" 

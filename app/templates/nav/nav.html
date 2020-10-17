@@ -6,7 +6,7 @@
         <ul class="nav__items list">
             <li class="nav__item {% if home %} nav__item_active {% endif %}"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
             <li class="nav__item {% if follow %} nav__item_active {% endif %}"><a href="{% url 'follow' %}" class="nav__link link">Мои подписки</a></li>
-            <li class="nav__item {% if new %} nav__item_active {% endif %}"><a href="{% url 'unew' %}" class="nav__link link">Создать рецепт</a></li>
+            <li class="nav__item {% if new %} nav__item_active {% endif %}"><a href="{% url 'recipe_new' %}" class="nav__link link">Создать рецепт</a></li>
             <li class="nav__item {% if favorites %} nav__item_active {% endif %}"><a href="{% url 'favorites' %}" class="nav__link link">Избранное</a></li>
             <li class="nav__item {% if purchases %} nav__item_active {% endif %}"><a href="{% url 'purchases' %}" class="nav__link link">Список покупок</a> 
                 <span class="badge badge_style_blue nav__badge" id="counter">{{ request|count_shoplist }}</span></li>

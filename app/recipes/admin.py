@@ -13,10 +13,10 @@ class RecipesAdmin(admin.ModelAdmin):
     prepopulated_fields = {"urlcode": ("title",)}
     inlines = (IngredientRecipesInline,)
     list_display = (
-        'image_img', 'title', 'author', 
+        'title', 'author', 
         'cooking_time', 'id', 
     )
-    list_display_links = ('title', 'image_img')
+    list_display_links = ('title',)
     list_filter = ('author', )
     search_fields = ('title', 'author__username', )
     autocomplete_fields = ('author', )

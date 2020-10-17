@@ -53,7 +53,7 @@
                             {{ recipe.author.last_name }}</p>
                     </li>
                     {% if user == recipe.author %}
-                    <li class="single-card__item"> <a style="margin-left: 2.5em" href="{% url 'uedit' recipe.id%}"
+                    <li class="single-card__item"> <a style="margin-left: 2.5em" href="{% url 'recipe_edit' recipe.id%}"
                             class="single-card__text">Редактировать рецепт</a></li>
                     {% endif %}
                 </ul>
@@ -61,7 +61,7 @@
             {% if user == recipe.author %}
             <div class="single-card__items single-card__items_column">
                 <p class="single-card__text">
-                    <a href="{% url 'udelete' id=recipe.id %}" style="color:red">Удалить рецепт</a>
+                    <a href="{% url 'recipe_delete' id=recipe.id %}" style="color:red">Удалить рецепт</a>
                 </p>
             </div>
             {% endif %}

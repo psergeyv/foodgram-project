@@ -22,11 +22,13 @@ def get_filter_values(request, recipe_id):
         recipe_id=recipe_id).filter(fuser=request.user).all()
     return is_favorite.count()
 
-
+ 
 @register.filter(name='count_shoplist')
 def get_filter_values(request):
     counts_list = ShoppingList.objects.filter(user=request.user).all()
-    return counts_list.count()
+    if counts_list.count() > 0:
+        return counts_list.count()
+    return ''
 
 
 @register.filter(name='is_shoplist')

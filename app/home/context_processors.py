@@ -15,24 +15,22 @@ def setting_site(request):
 
 
 def get_tags(request):
-    bdTags = Tags.objects.order_by("title").all()
+    list_tags = Tags.objects.order_by('title').all()
     tags = {}
-    tags_filters = []
-    for tag in bdTags:
+    for tag in list_tags:
         tags[tag.slug] = {'title': tag.title, 'style': tag.style}
-        tempTags = []
+        temp_tags = []
         if request.GET.get('f'):
-            tempTags = request.GET.get('f').split(',')
-        if tag.slug in tempTags:
-            tags_filters.append(tag.id)
+            temp_tags = request.GET.get('f').split(',')
+        if tag.slug in temp_tags:
             tags[tag.slug]['view'] = True
-            tempTags.remove(tag.slug)
+            temp_tags.remove(tag.slug)
         else:
             tags[tag.slug]['view'] = False
-            tempTags.append(tag.slug)
-        if len(tempTags) > 0:
-            tags[tag.slug]['url'] = '?f='+','.join(tempTags)
+            temp_tags.append(tag.slug)
+        if len(temp_tags) > 0:
+            tags[tag.slug]['url'] = '?f='+','.join(temp_tags)
         else:
             tags[tag.slug]['url'] = ''
 
-    return tags
+    return {'tags': tags}

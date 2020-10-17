@@ -14,7 +14,7 @@ from .utils import get_ingredients, get_tags_for_edit
 User = get_user_model()
 
 
-def list_user_recipes(request, user_id):    
+def list_user_recipes(request, user_id):
 
     seo_list = {"title": "", "keywords": "", "description": ""}
     seo = Seo.objects.filter(slug='index').first()
@@ -25,6 +25,19 @@ def list_user_recipes(request, user_id):
                     }
 
     author = get_object_or_404(User, id=user_id)
+    list_tags = Tags.objects.order_by('title').all()
+    tags = {}
+
+    list_tags = Tags.objects.order_by('title').all()
+    tags_filters = []
+    for tag in list_tags:
+        temp_tags = []
+        if request.GET.get('f'):
+            temp_tags = request.GET.get('f').split(',')
+        if tag.slug in temp_tags:
+            temp_tags.remove(tag.slug)
+        else:
+            temp_tags.append(tag.slug)
 
     if len(tags_filters) > 0:
         recipes_list = Recipes.objects.filter(author=author.id).filter(
@@ -41,7 +54,6 @@ def list_user_recipes(request, user_id):
         "seo": seo_list,
         "recipes": page_recipes,
         'author': author,
-        "tags": tags,
         "paginator": paginator
     })
 
@@ -86,11 +98,11 @@ def user_recipe_new(request):
         newRecipe.author = request.user
         newRecipe.save()
 
-        ingTemp = []
+        ingredient_temp = []
         for fing in request.POST:
             t = fing.split('_')
             if 'nameIngredient' == t[0]:
-                ingTemp.append(request.POST[f'nameIngredient_{t[1]}'])
+                ingredient_temp.append(request.POST[f'nameIngredient_{t[1]}'])
 
                 if request.POST[f'valueIngredient_{t[1]}'] == '':
                     count = 0
@@ -106,7 +118,7 @@ def user_recipe_new(request):
                 IngredientsAdd.save()
         form.save_m2m()
         return redirect(
-            'urecipe',
+            'view_recipe',
             user_id=request.user.id,
             id=newRecipe.id
         )
@@ -125,7 +137,7 @@ def user_recipe_edit(request, id):
     recipe = get_object_or_404(Recipes, id=id)
 
     if recipe.author != request.user:
-        return redirect('urecipe', recipe.author.id, id)
+        return redirect('view_recipe', recipe.author.id, id)
     head_form = f'Редактирование рецепта ({recipe.title})'
     text_btn_form = 'Сохранить изменения'
     form = RecipeCreateForm(request.POST or None,
@@ -137,11 +149,12 @@ def user_recipe_edit(request, id):
             form.save()
             IngredientRecipes.objects.filter(recipe=recipe).delete()
 
-            ingTemp = []
+            ingredient_temp = []
             for fing in request.POST:
                 t = fing.split('_')
                 if 'nameIngredient' == t[0]:
-                    ingTemp.append(request.POST[f'nameIngredient_{t[1]}'])
+                    ingredient_temp.append(
+                        request.POST[f'nameIngredient_{t[1]}'])
 
                     if request.POST[f'valueIngredient_{t[1]}'] == '':
                         count = 0
@@ -156,7 +169,7 @@ def user_recipe_edit(request, id):
                     )
                     IngredientsAdd.save()
 
-            return redirect('urecipe', user_id=request.user.id, id=recipe.id)
+            return redirect('view_recipe', user_id=request.user.id, id=recipe.id)
 
     tags = Tags.objects.all()
     list_tags = recipe.tags.values_list('slug', flat=True)
@@ -175,26 +188,6 @@ def user_recipe_edit(request, id):
 
 @login_required
 def favorites(request):
-    bdTags = Tags.objects.order_by("title").all()
-    tags = {}
-    tags_filters = []
-    for tag in bdTags:
-        tags[tag.slug] = {'title': tag.title, 'style': tag.style}
-        tempTags = []
-        if request.GET.get('f'):
-            tempTags = request.GET.get('f').split(',')
-        if tag.slug in tempTags:
-            tags_filters.append(tag.id)
-            tags[tag.slug]['view'] = True
-            tempTags.remove(tag.slug)
-        else:
-            tags[tag.slug]['view'] = False
-            tempTags.append(tag.slug)
-        if len(tempTags) > 0:
-            tags[tag.slug]['url'] = '?f='+','.join(tempTags)
-        else:
-            tags[tag.slug]['url'] = '/recipes/favorites/'
-
     seo_list = {"title": "Избранное",
                 "keywords": "Избранное", "description": "Избранное"}
     seo = Seo.objects.filter(slug='favorites').first()
@@ -207,6 +200,18 @@ def favorites(request):
     hrmlBl = {}
     for tb in hrmlBlock:
         hrmlBl[tb.codeblock] = {'name': tb.name, 'description': tb.description}
+
+    list_tags = Tags.objects.order_by('title').all()
+    tags_filters = []
+    for tag in list_tags:
+        temp_tags = []
+        if request.GET.get('f'):
+            temp_tags = request.GET.get('f').split(',')
+        if tag.slug in temp_tags:
+            temp_tags.remove(tag.slug)
+        else:
+            temp_tags.append(tag.slug)
+
     if len(tags_filters) > 0:
         recipes = Recipes.objects.filter(
             favorite_recipe__fuser=request.user).filter(
@@ -221,7 +226,6 @@ def favorites(request):
     context = {
         'page': page,
         'paginator': paginator,
-        'tags': tags
     }
     return render(request, 'favorites.html', context)
 
@@ -238,7 +242,6 @@ def followes(request):
     context = {
         'page': page,
         'paginator': paginator,
-        'tags': {},
     }
     return render(request, 'follow.html', context)
 
@@ -261,5 +264,5 @@ def delete_recipe(request, id):
     recipe = get_object_or_404(Recipes, id=id)
     if request.user == recipe.author:
         Recipes.objects.filter(id=id).delete()
-        return redirect("urecipes", request.user.id)
-    return redirect("urecipes", request.user.id)
+        return redirect("list_recipes_author", request.user.id)
+    return redirect("list_recipes_author", request.user.id)

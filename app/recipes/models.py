@@ -85,18 +85,11 @@ class Recipes(models.Model):
         ordering = ('-pub_date', 'title',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
-
-    def image_img(self):
-        if self.image:
-            return mark_safe(
-                f'<img style="width:60px;" src="{self.image.url}" />'
-            )
-            return 'Без фото'
+    
 
     def __str__(self):
         return self.title
 
-    image_img.short_description = 'Картинка'
     
     def delete(self, *args, **kwargs):
         storage, path = self.image.storage, self.image.path

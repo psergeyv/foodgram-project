@@ -28,9 +28,9 @@
         {% if user == recipe.author %}
         <div class="card__items card__items_column">
             <p class="card__text">
-                <a href="{% url 'udelete' id=recipe.id %}" style="color:red">Удалить рецепт</a>
+                <a href="{% url 'recipe_delete' id=recipe.id %}" style="color:red">Удалить рецепт</a>
             </p>
-            <p class="card__text"><a style="margin-left: 2.5em" href="{% url 'uedit' recipe.id%}"
+            <p class="card__text"><a style="margin-left: 2.5em" href="{% url 'recipe_edit' recipe.id%}"
                     class="single-card__text">Редактировать рецепт</a></p>
         </div>
         {% endif %}
