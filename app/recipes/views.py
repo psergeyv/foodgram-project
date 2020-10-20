@@ -211,7 +211,7 @@ def favorites(request):
     context = {
         'page': page,
         'paginator': paginator,
-        'seo_list':seo_list
+        'seo':seo_list
     }
     return render(request, 'favorites.html', context)
 
