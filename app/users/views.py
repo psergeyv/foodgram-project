@@ -17,7 +17,7 @@ class SignUp(CreateView):
     
 
 @login_required
-def EditProfile(request):
+def edit_profile(request):
     if request.method == "POST":
         usrform = UpdateProfile(request.POST or None, instance=request.user)
         if usrform.is_valid():

@@ -16,10 +16,10 @@
         <h1 class="main__title">Список покупок</h1>
     </div>
     <div class="card-list card-list_column">
-        {% if ShopListCount > 0 %}
+        {% if shop_list_count > 0 %}
         {% csrf_token %}
         <ul class="shopping-list">
-            {% for val in ShopList %}
+            {% for val in shop_list %}
             <li class="shopping-list__item" data-id="{{val.recipe.id}}">
                 <div class="recipe recipe_reverse">
                     {% load thumbnail %}

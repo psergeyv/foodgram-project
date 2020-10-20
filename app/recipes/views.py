@@ -102,12 +102,12 @@ def user_recipe_new(request):
                     count = int(request.POST[f'valueIngredient_{t[1]}'])
                 ingredient = Ingredient.objects.get(
                     title=request.POST[f'nameIngredient_{t[1]}'])
-                IngredientsAdd = IngredientRecipes.objects.create(
+                ingredients_add = IngredientRecipes.objects.create(
                     recipe=newRecipe,
                     ingredient=ingredient,
                     count=count
                 )
-                IngredientsAdd.save()
+                ingredients_add.save()
         form.save_m2m()
         return redirect(
             'view_recipe',
@@ -154,12 +154,12 @@ def user_recipe_edit(request, id):
                         count = int(request.POST[f'valueIngredient_{t[1]}'])
                     ingredient = Ingredient.objects.get(
                         title=request.POST[f'nameIngredient_{t[1]}'])
-                    IngredientsAdd = IngredientRecipes.objects.create(
+                    ingredients_add = IngredientRecipes.objects.create(
                         recipe=recipe,
                         ingredient=ingredient,
                         count=count
                     )
-                    IngredientsAdd.save()
+                    ingredients_add.save()
 
             return redirect('view_recipe', user_id=request.user.id, id=recipe.id)
 
@@ -211,6 +211,7 @@ def favorites(request):
     context = {
         'page': page,
         'paginator': paginator,
+        'seo_list':seo_list
     }
     return render(request, 'favorites.html', context)
 
@@ -232,14 +233,14 @@ def followes(request):
 
 
 def purchases(request):
-    ShopList = ShoppingList.objects.filter(
+    shop_list = ShoppingList.objects.filter(
         user_id=request.user.id).all()
-    ShopListCount = ShoppingList.objects.filter(
+    shop_list_count = ShoppingList.objects.filter(
         user_id=request.user.id).count
 
     context = {
-        'ShopList': ShopList,
-        'ShopListCount': ShopListCount
+        'shop_list': shop_list,
+        'shop_list_count': shop_list_count
     }
     return render(request, 'shopList.html', context)
 

@@ -92,10 +92,10 @@ def delete_purchases(request, recipe_id):
 
 @login_required
 def dwl_purchases(request):
-    shopList = ShoppingList.objects.filter(
+    shop_list = ShoppingList.objects.filter(
         user_id=request.user.id).values_list("recipe", flat=True).all()
     ingredientList = IngredientRecipes.objects.filter(
-        recipe_id__in=shopList).order_by('ingredient')
+        recipe_id__in=shop_list).order_by('ingredient')
     
     outList = {}
     for value in ingredientList:
