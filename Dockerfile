@@ -1,8 +1,7 @@
 FROM python:3.8
 
 WORKDIR /code
-RUN mkdir /code/app/static
-RUN mkdir /code/app/media
+
 COPY ./requirements.txt /code
 COPY ./requirements.in /code
 RUN pip install -r /code/requirements.txt
